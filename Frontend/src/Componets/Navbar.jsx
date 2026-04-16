@@ -18,11 +18,11 @@ export function Navbar(){
   },
   {
     name:"About us",
-    path:"/About-us"
+    path:"/About-us" 
   }]
   return (
     <nav className="flex flex-row justify-around mt-3 border-amber-900 border-2 rounded-lg p-2">
-       <img src="/logo.png"  />
+       <img src="/logo.png"  alt="Map" className="w-[45px] grayscale hover:grayscale-0 transition-all duration-500" />
        <ul
        className="flex flex-row justify-between w-[40%]">
         {
