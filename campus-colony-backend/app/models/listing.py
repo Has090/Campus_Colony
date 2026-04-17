@@ -1,15 +1,20 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime
-from datetime import datetime
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, LargeBinary
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 class Listing(Base):
     __tablename__ = "listings"
 
     id = Column(Integer, primary_key=True, index=True)
-    property_name = Column(String, nullable=False)
-    property_type = Column(String) 
-    area = Column(String)          
-    score = Column(Integer)         # Area Score (0-100)
-    price = Column(Float)
-    status = Column(String, default="Active") 
-    created_at = Column(DateTime, default=datetime.utcnow)
+    title = Column(String, nullable=False)
+    description = Column(String)
+    price = Column(Float, nullable=False)
+    type = Column(String)  # house, flat, hostel
+    image = Column(LargeBinary, nullable=True)
+    # Foreign Keys
+    area_id = Column(Integer, ForeignKey("areas.id"))
+    landlord_id = Column(Integer, ForeignKey("landlords.id"))
+
+    # Relationships
+    area = relationship("Area")
+    landlord = relationship("Landlord")
