@@ -1,0 +1,46 @@
+.
+├── app
+│   ├── config.py
+│   ├── database.py
+│   ├── __init__.py
+│   ├── main.py
+│   ├── ml_models
+│   ├── models
+│   │   ├── area.py
+│   │   ├── listing.py
+│   │   ├── review.py
+│   │   └── user.py
+│   ├── __pycache__
+│   │   ├── database.cpython-312.pyc
+│   │   ├── __init__.cpython-312.pyc
+│   │   └── main.cpython-312.pyc
+│   ├── routes
+│   │   ├── ai.py
+│   │   ├── areas.py
+│   │   ├── auth.py
+│   │   ├── __init__.py
+│   │   ├── listings.py
+│   │   ├── __pycache__
+│   │   │   ├── areas.cpython-312.pyc
+│   │   │   └── __init__.cpython-312.pyc
+│   │   ├── reviews.py
+│   │   └── users.py
+│   ├── schemas
+│   │   ├── area.py
+│   │   ├── listing.py
+│   │   ├── review.py
+│   │   └── user.py
+│   ├── services
+│   │   ├── ai_service.py
+│   │   ├── area_service.py
+│   │   ├── auth_service.py
+│   │   └── recommendation.py
+│   └── utils
+│       ├── helpers.py
+│       └── security.py
+├── create_admin.py
+├── README.md
+├── requirements.txt
+└── structure.txt
+
+10 directories, 34 files

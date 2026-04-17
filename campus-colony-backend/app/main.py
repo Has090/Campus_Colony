@@ -1,14 +1,17 @@
 from fastapi import FastAPI
 from app.database import Base, engine
-from app.routes import auth
+from app.models.area import Area
+
+from app.routes.areas import router as areas_router
+from app.routes.auth import router as auth_router
 
 app = FastAPI()
 
-# Create tables
+
 Base.metadata.create_all(bind=engine)
 
-# Include routes
-app.include_router(auth.router, prefix="/auth", tags=["Auth"])
+app.include_router(auth_router, prefix="/auth", tags=["Auth"])
+app.include_router(areas_router, prefix="/areas", tags=["Areas"])
 
 @app.get("/")
 def root():
