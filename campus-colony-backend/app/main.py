@@ -22,58 +22,5 @@ app.include_router(listings_router, prefix="/listings", tags=["Listings"])
 def root():
     return {"message": "Campus Colony API running"}
 
-from sqlalchemy import text
-
-@app.get("/tables")
-def get_tables():
-    with engine.connect() as conn:
-        result = conn.execute(text("""
-            SELECT table_name 
-            FROM information_schema.tables 
-            WHERE table_schema='public';
-        """))
-        return [row[0] for row in result]
 
 
-@app.get("/drop-all")
-def drop_all():
-    with engine.connect() as conn:
-        conn.execute(text("""
-            DO $$ DECLARE
-                r RECORD;
-            BEGIN
-                FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public')
-                LOOP
-                    EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE';
-                END LOOP;
-            END $$;
-        """))
-        conn.commit()
-    return {"message": "All tables dropped"}
-
-
-
-@app.get("/schema")
-def get_schema():
-    with engine.connect() as conn:
-        result = conn.execute(text("""
-            SELECT 
-                table_name,
-                column_name,
-                data_type
-            FROM information_schema.columns
-            WHERE table_schema = 'public'
-            ORDER BY table_name, ordinal_position;
-        """))
-
-        schema = {}
-
-        for table, column, dtype in result:
-            if table not in schema:
-                schema[table] = []
-            schema[table].append({
-                "column": column,
-                "type": dtype
-            })
-
-        return schema
