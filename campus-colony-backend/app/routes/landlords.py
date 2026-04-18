@@ -6,17 +6,17 @@ from app.services.landlord_service import create_landlord, get_landlords, delete
 
 router = APIRouter()
 
-# ✅ Add Landlord (Admin)
+# Add Landlord (Admin)
 @router.post("/")
 def add_landlord(data: LandlordCreate, db: Session = Depends(get_db)):
     return create_landlord(db, data)
 
-# ✅ Get All Landlords
+#  Get All Landlords
 @router.get("/")
 def list_landlords(db: Session = Depends(get_db)):
     return get_landlords(db)
 
-# ✅ Delete Landlord
+# Delete Landlord
 @router.delete("/{landlord_id}")
 def remove_landlord(landlord_id: int, db: Session = Depends(get_db)):
     result = delete_landlord(db, landlord_id)

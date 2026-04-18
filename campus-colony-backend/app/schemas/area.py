@@ -19,4 +19,4 @@ class AreaResponse(BaseModel):
     score: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
