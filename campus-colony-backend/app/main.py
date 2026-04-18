@@ -7,6 +7,7 @@ from app.routes.auth import router as auth_router
 #from app.routes.admin import router as admin_router
 from app.routes.landlords import router as landlords_router
 from app.routes.listings import router as listings_router
+from app.routes.ai import router as ai_router
 app = FastAPI()
 
 
@@ -17,6 +18,7 @@ app.include_router(areas_router, prefix="/areas", tags=["Areas"])
 #app.include_router(admin_router, prefix="/admin", tags=["Admin"])
 app.include_router(landlords_router, prefix="/landlords", tags=["Landlords"])
 app.include_router(listings_router, prefix="/listings", tags=["Listings"])
+app.include_router(ai_router, prefix="/ai", tags=["AI Model"])
 
 @app.get("/")
 def root():
