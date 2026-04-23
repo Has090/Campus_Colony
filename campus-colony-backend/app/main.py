@@ -1,5 +1,9 @@
 from fastapi import FastAPI
 from app.database import Base, engine
+from sqlalchemy import text
+
+from app.models.listing import Listing
+from app.models.landlord import Landlord
 from app.models.area import Area
 
 from app.routes.areas import router as areas_router
@@ -25,4 +29,46 @@ def root():
     return {"message": "Campus Colony API running"}
 
 
+@app.get("/tables")
+def get_tables():
+    with engine.connect() as conn:
+        result = conn.execute(text("""
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_schema='public';
+        """))
+        return [row[0] for row in result]
 
+
+@app.post("/reset-db")
+def reset_db():
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+    return {"message": "Database reset successfully"}
+
+
+
+@app.get("/schema")
+def get_schema():
+    with engine.connect() as conn:
+        result = conn.execute(text("""
+            SELECT 
+                table_name,
+                column_name,
+                data_type
+            FROM information_schema.columns
+            WHERE table_schema = 'public'
+            ORDER BY table_name, ordinal_position;
+        """))
+
+        schema = {}
+
+        for table, column, dtype in result:
+            if table not in schema:
+                schema[table] = []
+            schema[table].append({
+                "column": column,
+                "type": dtype
+            })
+
+        return schema

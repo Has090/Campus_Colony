@@ -2,10 +2,17 @@ from sqlalchemy.orm import Session
 from app.models.listing import Listing
 
 
-def create_listing(db: Session, data, image_bytes=None):
+from app.utils.helpers import upload_image
+
+def create_listing(db: Session, data, image_file=None):
+    image_url = None
+
+    if image_file:
+        image_url = upload_image(image_file.file) 
+
     listing = Listing(
         **data.model_dump(),
-        image=image_bytes
+        image_url=image_url
     )
 
     db.add(listing)
@@ -13,7 +20,6 @@ def create_listing(db: Session, data, image_bytes=None):
     db.refresh(listing)
 
     return listing
-
 
 def get_listings(db: Session):
     listings = db.query(Listing).all()
@@ -29,7 +35,7 @@ def get_listings(db: Session):
             "type": l.type,
             "area_id": l.area_id,
             "landlord_id": l.landlord_id,
-            "image_url": f"/listings/{l.id}/image" if l.image else None
+            "image_url": l.image_url if l.image_url else None
         })
 
     return result
