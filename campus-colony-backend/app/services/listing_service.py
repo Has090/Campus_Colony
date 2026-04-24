@@ -1,14 +1,13 @@
 from sqlalchemy.orm import Session
 from app.models.listing import Listing
-
-
 from app.utils.helpers import upload_image
+
 
 def create_listing(db: Session, data, image_file=None):
     image_url = None
 
     if image_file:
-        image_url = upload_image(image_file.file) 
+        image_url = upload_image(image_file.file)
 
     listing = Listing(
         **data.model_dump(),
@@ -21,24 +20,20 @@ def create_listing(db: Session, data, image_file=None):
 
     return listing
 
-def get_listings(db: Session):
-    listings = db.query(Listing).all()
 
-    result = []
+# =========================
+# GET LISTINGS (WITH SORT)
+# =========================
+def get_listings(db: Session, sort: str = None):
+    query = db.query(Listing)
 
-    for l in listings:
-        result.append({
-            "id": l.id,
-            "title": l.title,
-            "description": l.description,
-            "price": l.price,
-            "type": l.type,
-            "area_id": l.area_id,
-            "landlord_id": l.landlord_id,
-            "image_url": l.image_url if l.image_url else None
-        })
+    if sort == "price_asc":
+        query = query.order_by(Listing.price.asc())
 
-    return result
+    elif sort == "price_desc":
+        query = query.order_by(Listing.price.desc())
+
+    return query.all()
 
 
 def delete_listing(db: Session, listing_id: int):
@@ -49,4 +44,5 @@ def delete_listing(db: Session, listing_id: int):
 
     db.delete(listing)
     db.commit()
+
     return True

@@ -8,6 +8,7 @@ from app.models.landlord import Landlord
 from app.models.area import Area
 from app.models.review import Review  
 from app.models.user import User       
+from app.models.favourite import Favourite
 
 
 from app.routes.areas import router as areas_router
@@ -17,10 +18,13 @@ from app.routes.landlords import router as landlords_router
 from app.routes.listings import router as listings_router
 from app.routes.ai import router as ai_router
 from app.routes.reviews import router as reviews_router  
-
+from app.routes.favourites import router as favourites_router
 app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
+
+
+app.include_router(favourites_router, prefix="/favourites", tags=["Favourites"])
 
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(areas_router, prefix="/areas", tags=["Areas"])
@@ -28,7 +32,8 @@ app.include_router(areas_router, prefix="/areas", tags=["Areas"])
 app.include_router(landlords_router, prefix="/landlords", tags=["Landlords"])
 app.include_router(listings_router, prefix="/listings", tags=["Listings"])
 app.include_router(ai_router, prefix="/ai", tags=["AI Model"])
-app.include_router(reviews_router) 
+app.include_router(reviews_router, prefix="/reviews", tags=["Reviews"])
+app.include_router(favourites_router, prefix="/favourites", tags=["Favourites"])
 
 @app.get("/")
 def root():

@@ -16,3 +16,4 @@ class User(Base):
     institution = Column(String)
 
     reviews = relationship("Review", back_populates="user", cascade="all, delete")
+    favourites = relationship("Favourite", cascade="all, delete")

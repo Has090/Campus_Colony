@@ -18,7 +18,7 @@ class Listing(Base):
     area_id = Column(Integer, ForeignKey("areas.id", ondelete="SET NULL"))
     landlord_id = Column(Integer, ForeignKey("landlords.id", ondelete="SET NULL"))
 
-    # 🔗 relationships
     area = relationship("Area", back_populates="listings")
     landlord = relationship("Landlord", back_populates="listings")
     reviews = relationship("Review", back_populates="listing", cascade="all, delete")
+    favourites = relationship("Favourite", cascade="all, delete")

@@ -9,6 +9,8 @@ class ListingCreate(BaseModel):
     type: str
     area_id: int
     landlord_id: int
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
 
 class ListingResponse(BaseModel):
@@ -19,6 +21,8 @@ class ListingResponse(BaseModel):
     type: str
     area_id: int
     landlord_id: int
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
     image_url: Optional[str] = None
 
     model_config = ConfigDict(from_attributes=True)
