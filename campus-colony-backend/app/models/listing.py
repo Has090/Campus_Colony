@@ -9,13 +9,16 @@ class Listing(Base):
     title = Column(String, nullable=False)
     description = Column(String)
     price = Column(Float, nullable=False)
-    type = Column(String)  
+    type = Column(String)
     image_url = Column(String, nullable=True)
+
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-    area_id = Column(Integer, ForeignKey("areas.id"))
-    landlord_id = Column(Integer, ForeignKey("landlords.id"))
 
-    
-    area = relationship("Area")
-    landlord = relationship("Landlord")
+    area_id = Column(Integer, ForeignKey("areas.id", ondelete="SET NULL"))
+    landlord_id = Column(Integer, ForeignKey("landlords.id", ondelete="SET NULL"))
+
+    # 🔗 relationships
+    area = relationship("Area", back_populates="listings")
+    landlord = relationship("Landlord", back_populates="listings")
+    reviews = relationship("Review", back_populates="listing", cascade="all, delete")

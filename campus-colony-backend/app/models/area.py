@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 class Area(Base):
@@ -14,3 +15,6 @@ class Area(Base):
     gyms = Column(Integer, default=0)
 
     score = Column(Float, default=0.0)
+
+    # 🔗 relationships
+    listings = relationship("Listing", back_populates="area")

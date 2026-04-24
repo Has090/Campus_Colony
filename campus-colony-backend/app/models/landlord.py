@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 class Landlord(Base):
@@ -8,3 +9,6 @@ class Landlord(Base):
     name = Column(String, nullable=False)
     phone = Column(String, nullable=False)
     email = Column(String, nullable=True)
+
+    # 🔗 relationships
+    listings = relationship("Listing", back_populates="landlord")
