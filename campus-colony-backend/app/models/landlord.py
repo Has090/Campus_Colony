@@ -10,5 +10,5 @@ class Landlord(Base):
     phone = Column(String, nullable=False)
     email = Column(String, nullable=True)
 
-    # 🔗 relationships
+    
     listings = relationship("Listing", back_populates="landlord")

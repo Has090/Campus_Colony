@@ -6,12 +6,12 @@ from app.services.auth_service import create_user, login_user
 
 router = APIRouter()
 
-# ✅ Student Signup
+
 @router.post("/signup")
 def signup(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db, user.name, user.email, user.password)
 
-# ✅ Login (Student + Admin)
+
 @router.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):
     result = login_user(db, user.email, user.password)

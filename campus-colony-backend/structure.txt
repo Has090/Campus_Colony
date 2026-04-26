@@ -11,6 +11,7 @@
 │   │   └── scaler.pkl
 │   ├── models
 │   │   ├── area.py
+│   │   ├── favourite.py
 │   │   ├── landlord.py
 │   │   ├── listing.py
 │   │   ├── review.py
@@ -20,6 +21,7 @@
 │   │   ├── ai.py
 │   │   ├── areas.py
 │   │   ├── auth.py
+│   │   ├── favourites.py
 │   │   ├── __init__.py
 │   │   ├── landlords.py
 │   │   ├── listings.py
@@ -38,6 +40,7 @@
 │   │   ├── ai_service.py
 │   │   ├── area_service.py
 │   │   ├── auth_service.py
+│   │   ├── favourite_service.py
 │   │   ├── landlord_service.py
 │   │   ├── listing_service.py
 │   │   ├── recommendation.py
@@ -51,4 +54,4 @@
 ├── requirements.txt
 └── structure.txt
 
-8 directories, 44 files
+8 directories, 47 files

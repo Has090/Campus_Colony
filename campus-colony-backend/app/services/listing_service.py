@@ -21,9 +21,6 @@ def create_listing(db: Session, data, image_file=None):
     return listing
 
 
-# =========================
-# GET LISTINGS (WITH SORT)
-# =========================
 def get_listings(db: Session, sort: str = None):
     query = db.query(Listing)
 

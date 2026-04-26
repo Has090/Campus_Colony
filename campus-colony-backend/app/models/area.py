@@ -16,5 +16,4 @@ class Area(Base):
 
     score = Column(Float, default=0.0)
 
-    # 🔗 relationships
     listings = relationship("Listing", back_populates="area")
