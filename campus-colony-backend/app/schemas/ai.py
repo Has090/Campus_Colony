@@ -16,3 +16,7 @@ class RentPredictionRequest(BaseModel):
     distance_city_center: float
     near_school: str
     near_market: str
+
+
+class ChatbotRequest(BaseModel):
+    query: str    

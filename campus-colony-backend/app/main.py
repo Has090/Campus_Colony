@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.database import Base, engine
 from sqlalchemy import text
 
-
+# Models (important for table creation)
 from app.models.listing import Listing
 from app.models.landlord import Landlord
 from app.models.area import Area
@@ -10,35 +10,38 @@ from app.models.review import Review
 from app.models.user import User       
 from app.models.favourite import Favourite
 
-
+# Routers
 from app.routes.areas import router as areas_router
 from app.routes.auth import router as auth_router
-# from app.routes.admin import router as admin_router
 from app.routes.landlords import router as landlords_router
 from app.routes.listings import router as listings_router
-from app.routes.ai import router as ai_router
+from app.routes.ai import router as ai_router   # 👈 NLP here
 from app.routes.reviews import router as reviews_router  
 from app.routes.favourites import router as favourites_router
-app = FastAPI()
 
+app = FastAPI(title="Campus Colony API")
+
+# Create tables
 Base.metadata.create_all(bind=engine)
 
 
-app.include_router(favourites_router, prefix="/favourites", tags=["Favourites"])
-
+# 🔗 ROUTES
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(areas_router, prefix="/areas", tags=["Areas"])
-# app.include_router(admin_router, prefix="/admin", tags=["Admin"])
 app.include_router(landlords_router, prefix="/landlords", tags=["Landlords"])
 app.include_router(listings_router, prefix="/listings", tags=["Listings"])
-app.include_router(ai_router, prefix="/ai", tags=["AI Model"])
+app.include_router(ai_router, prefix="/ai", tags=["AI / Chatbot"])  # 👈 NLP
 app.include_router(reviews_router, prefix="/reviews", tags=["Reviews"])
 app.include_router(favourites_router, prefix="/favourites", tags=["Favourites"])
 
+
+# 🌐 ROOT
 @app.get("/")
 def root():
-    return {"message": "Campus Colony API running"}
+    return {"message": "Campus Colony API running 🚀"}
 
+
+# 📊 TABLES
 @app.get("/tables")
 def get_tables():
     with engine.connect() as conn:
@@ -50,6 +53,7 @@ def get_tables():
         return [row[0] for row in result]
 
 
+# ⚠️ RESET DB (DEV ONLY)
 @app.post("/reset-db")
 def reset_db():
     Base.metadata.drop_all(bind=engine)
@@ -57,6 +61,7 @@ def reset_db():
     return {"message": "Database reset successfully"}
 
 
+# 🧬 SCHEMA VIEW
 @app.get("/schema")
 def get_schema():
     with engine.connect() as conn:
